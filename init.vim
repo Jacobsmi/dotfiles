@@ -28,6 +28,16 @@ nnoremap <silent> ;; <cmd>Telescope help_tags<cr>
 
 colorscheme onedark
 
+
+filetype plugin indent on
+" On pressing tab, insert 2 spaces
+set expandtab
+" show existing tab with 2 spaces width
+set tabstop=2
+set softtabstop=2
+" when indenting with '>', use 2 spaces width
+set shiftwidth=2
+
 lua << END
 -- Start lualine
 require('lualine').setup()
@@ -70,10 +80,6 @@ local saga = require 'lspsaga'
 saga.init_lsp_saga({
 	diagnostic_header = { "‼️", "⚠️", "ℹ️", "❕" },
 })
-
-nvim_lsp.diagnosticls.setup {
-  -- your configuration
-}
 
 nvim_lsp.diagnosticls.setup {
   on_attach = on_attach,
@@ -130,7 +136,7 @@ nvim_lsp.diagnosticls.setup {
       json = 'prettier',
       markdown = 'prettier',
     }
-  }
+  },
 }
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
