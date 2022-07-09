@@ -9,6 +9,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'kyazdani42/nvim-tree.lua'
 
 call plug#end()
@@ -18,6 +19,8 @@ nnoremap <silent>K :Lspsaga hover_doc<CR>
 inoremap <silent> <C-k> <Cmd>Lspsaga signature_help<CR>
 nnoremap <silent> gh <Cmd>Lspsaga lsp_finder<CR>
 nnoremap <silent> <C-j> :Lspsaga diagnostic_jump_next<CR>
+
+nnoremap <silent> ff <Cmd>:NvimTreeToggle<CR>
 
 set completeopt=menuone,noinsert,noselect
 
@@ -48,10 +51,15 @@ require("nvim-tree").setup()
 
 -- Start and setup nvim-cmp
 local cmp = require'cmp'
-cmp.setup()
+cmp.setup({
+  sources = {
+    { name = 'nvim_lsp' }
+  }
+})
 
 -- Start the TS Server for nvim lsp
 local nvim_lsp = require('lspconfig')
+
 
 -- Create on_attach function that defines keybinds
 local on_attach = function(client, bufnr)
@@ -70,9 +78,8 @@ local on_attach = function(client, bufnr)
 end
 
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(
-  vim.lsp.protocol.make_client_capabilities()
-)
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- TypeScript
 nvim_lsp.tsserver.setup {
