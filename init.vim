@@ -20,9 +20,6 @@ nnoremap <silent> gh <Cmd>Lspsaga lsp_finder<CR>
 nnoremap <silent> <C-j> :Lspsaga diagnostic_jump_next<CR>
 
 set completeopt=menuone,noinsert,noselect
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 nnoremap <silent> <space>f <cmd>Telescope find_files<cr>
 nnoremap <silent> <space>r <cmd>Telescope live_grep<cr>
@@ -38,6 +35,10 @@ require('lualine').setup()
 
 -- Start nvim-tree
 require("nvim-tree").setup()
+
+-- Start and setup nvim-cmp
+local cmp = require'cmp'
+cmp.setup()
 
 -- Start the TS Server for nvim lsp
 local nvim_lsp = require('lspconfig')
