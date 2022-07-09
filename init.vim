@@ -52,7 +52,6 @@ cmp.setup()
 
 -- Start the TS Server for nvim lsp
 local nvim_lsp = require('lspconfig')
-nvim_lsp.tsserver.setup {}
 
 -- Create on_attach function that defines keybinds
 local on_attach = function(client, bufnr)
@@ -70,8 +69,14 @@ local on_attach = function(client, bufnr)
   end
 end
 
+
+local capabilities = require('cmp_nvim_lsp').update_capabilities(
+  vim.lsp.protocol.make_client_capabilities()
+)
+
 -- TypeScript
 nvim_lsp.tsserver.setup {
+  capabilities = capabilities,
   on_attach = on_attach
 }
 
